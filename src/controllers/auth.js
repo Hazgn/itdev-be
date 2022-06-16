@@ -1,4 +1,4 @@
-const autModel = require('../models/auth')
+const authModel = require('../models/auth')
 const responseHelper = require('../helpers/sendResponse')
 const bycrpt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -11,7 +11,7 @@ const registerUserConstroller = async (req, res) => {
     const usernamePattern = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/
 
     try {
-        const checkUser = await autModel.find({
+        const checkUser = await authModel.find({
             username: username
         })
 
@@ -21,7 +21,7 @@ const registerUserConstroller = async (req, res) => {
 
         password = await bycrpt.hash(password, 6)
 
-        const createUser = new autModel({
+        const createUser = new authModel({
             username: username,
             password: password,
             role: 'user'
@@ -44,7 +44,7 @@ const registerAdminConstroller = async (req, res) => {
     const usernamePattern = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/
 
     try {
-        const checkUser = await autModel.find({
+        const checkUser = await authModel.find({
             username: username
         })
 
@@ -54,7 +54,7 @@ const registerAdminConstroller = async (req, res) => {
 
         password = await bycrpt.hash(password, 6)
 
-        const createUser = new autModel({
+        const createUser = new authModel({
             username: username,
             password: password,
             role: 'admin'
@@ -74,7 +74,7 @@ const loginController = async (req, res) => {
     const { username, password } = body
 
     try {
-        const checkUser = await autModel.findOne({ username: username })
+        const checkUser = await authModel.findOne({ username: username })
         if (checkUser === null) return responseHelper.error(res, 404, 'Username Not Found')
 
         const isPasswordValid = await bycrpt.compare(password, checkUser.password)
