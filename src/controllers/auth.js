@@ -4,7 +4,7 @@ const bycrpt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 // registration user
-const registerUserConstroller = async (req, res) => {
+const registerUsersController = async (req, res) => {
     const { body } = req
     let { username, password } = body
 
@@ -15,7 +15,7 @@ const registerUserConstroller = async (req, res) => {
             username: username
         })
 
-        if (username === '' || password === '') return responseHelper.error(res, 401, 'Need input email, And password')
+        if (username === '' || password === '') return responseHelper.error(res, 401, 'Need input Username, And password')
         if (checkUser.length !== 0) return responseHelper.error(res, 401, 'Username is Already')
         if (username !== '' && !usernamePattern.test(username)) return responseHelper.error(res, 401, 'Username Invalid')
 
@@ -37,7 +37,7 @@ const registerUserConstroller = async (req, res) => {
 }
 
 // registration admin
-const registerAdminConstroller = async (req, res) => {
+const registerAdminController = async (req, res) => {
     const { body } = req
     let { username, password } = body
 
@@ -48,7 +48,7 @@ const registerAdminConstroller = async (req, res) => {
             username: username
         })
 
-        if (username === '' || password === '') return responseHelper.error(res, 401, 'Need input email, And password')
+        if (username === '' || password === '') return responseHelper.error(res, 401, 'Need input Username, And password')
         if (checkUser.length !== 0) return responseHelper.error(res, 401, 'Username is Already')
         if (username !== '' && !usernamePattern.test(username)) return responseHelper.error(res, 401, 'Username Invalid')
 
@@ -110,7 +110,7 @@ const loginController = async (req, res) => {
 }
 
 module.exports = {
-    registerUserConstroller,
-    registerAdminConstroller,
+    registerUsersController,
+    registerAdminController,
     loginController
 }
